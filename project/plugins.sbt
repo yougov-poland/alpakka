@@ -19,3 +19,4 @@ addSbtPlugin("com.lightbend.akka.grpc" % "sbt-akka-grpc" % "0.8.4")
 // #grpc-agent
 addSbtPlugin("com.lightbend.sbt" % "sbt-javaagent" % "0.1.5")
 // #grpc-agent
+addSbtPlugin("com.yougov" % "yougov-sbt-plugin" % "3.2.4")

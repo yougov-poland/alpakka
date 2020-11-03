@@ -438,7 +438,8 @@ def alpakkaProject(projectId: String, moduleName: String, additionalSettings: sb
   import com.typesafe.tools.mima.core.{Problem, ProblemFilters}
   Project(id = projectId, base = file(projectId))
     .enablePlugins(AutomateHeaderPlugin)
-    .disablePlugins(SitePlugin)
+    .enablePlugins(com.yougov.sbtplugin.LibraryPlugin)
+    .disablePlugins(SitePlugin, BintrayPlugin)
     .settings(
       name := s"akka-stream-alpakka-$projectId",
       AutomaticModuleName.settings(s"akka.stream.alpakka.$moduleName"),
@@ -446,7 +447,9 @@ def alpakkaProject(projectId: String, moduleName: String, additionalSettings: sb
           organization.value %% name.value % previousStableVersion.value
             .getOrElse(throw new Error("Unable to determine previous version"))
         ),
-      mimaBinaryIssueFilters += ProblemFilters.exclude[Problem]("*.impl.*")
+      mimaBinaryIssueFilters += ProblemFilters.exclude[Problem]("*.impl.*"),
+      DynVerPlugin.buildSettings.find(_.key.key == isSnapshot.key).get,
+      version := version.value + (if (isSnapshot.value) "-SNAPSHOT" else "")
     )
     .settings(additionalSettings: _*)
     .dependsOn(testkit % Test)
