@@ -40,7 +40,7 @@ object Common extends AutoPlugin {
       whitesourceGroup := Whitesource.Group.Community,
       crossVersion := CrossVersion.binary,
       crossScalaVersions := Dependencies.ScalaVersions,
-      scalaVersion := Dependencies.Scala212,
+      scalaVersion := Dependencies.Scala213,
       scalacOptions ++= Seq(
           "-encoding",
           "UTF-8",
